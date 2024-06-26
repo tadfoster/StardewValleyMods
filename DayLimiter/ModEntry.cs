@@ -16,6 +16,7 @@ namespace DayLimiter
         public static ModConfig _config;
         public static IModHelper _helper;
         public static int DayCount;
+        public static bool IsQuitting;
 
         /*********
         ** Public methods
@@ -24,11 +25,9 @@ namespace DayLimiter
         /// <param name="helper">Provides simplified APIs for writing mods.</param>
         public override void Entry(IModHelper helper)
         {
-            DayCount = 0;
+            initMod();
 
             _helper = helper;
-
-            _config = Helper.ReadConfig<ModConfig>();
 
             _helper.Events.GameLoop.DayStarted += DayStartedEvent;
 
@@ -36,24 +35,24 @@ namespace DayLimiter
 
             _helper.Events.GameLoop.ReturnedToTitle += ReturnedToTitleEvent;
 
+            _helper.Events.Display.MenuChanged += MenuChangedEvent;
+
             _helper.Events.GameLoop.GameLaunched += GameLaunchedEvent;
         }
 
         private void DayStartedEvent(object? sender, DayStartedEventArgs e)
         {
-            if (_config.ModEnabled && DayCount >= _config.DayLimitCount) 
+            if (_config.ModEnabled) 
             {
-                if (DayCount == _config.DayLimitCount)
+                if (DayCount == (_config.DayLimitCount - 1))
                 {
                     Game1.drawObjectDialogue(_helper.Translation.Get("Message_FinalDay"));
                 }
-                else if (_config.ExitToTitle)
+                else if (DayCount >= _config.DayLimitCount)
                 {
-                    Game1.exitToTitle = true;
-                }
-                else
-                {
-                    Game1.quit = true;
+                    Game1.drawObjectDialogue(_helper.Translation.Get("Message_ShutDown"));
+
+                    IsQuitting = true;
                 }
             }
         }
@@ -68,9 +67,22 @@ namespace DayLimiter
 
         private void ReturnedToTitleEvent(object? sender, ReturnedToTitleEventArgs e)
         {
-            DayCount = 0;
+            initMod();
+        }
 
-            _config = Helper.ReadConfig<ModConfig>();
+        private void MenuChangedEvent(object? sender, MenuChangedEventArgs e)
+        {
+            if (_config.ModEnabled && IsQuitting && Game1.hasLoadedGame && Game1.activeClickableMenu == null)
+            {
+                if (_config.ExitToTitle)
+                {
+                    Game1.exitToTitle = true;
+                }
+                else
+                {
+                    Game1.quit = true;
+                }
+            }
         }
 
         private void GameLaunchedEvent(object? sender, GameLaunchedEventArgs e)
@@ -131,6 +143,14 @@ namespace DayLimiter
                     setValue: value => _config.ExitToTitle = value
                 );
             }
+        }
+
+        private void initMod()
+        {
+            DayCount = 0;
+            IsQuitting = false;
+
+            _config = Helper.ReadConfig<ModConfig>();
         }
 
         private void setModEnabledConfig(bool value)
