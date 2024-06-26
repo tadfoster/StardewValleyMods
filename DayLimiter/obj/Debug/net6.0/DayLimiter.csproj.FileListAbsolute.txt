@@ -1,0 +1,8 @@
+C:\Users\tarl1\source\repos\StardewValleyMods\DayLimiter\bin\Debug\net6.0\DayLimiter.deps.json
+C:\Users\tarl1\source\repos\StardewValleyMods\DayLimiter\bin\Debug\net6.0\DayLimiter.dll
+C:\Users\tarl1\source\repos\StardewValleyMods\DayLimiter\obj\Debug\net6.0\DayLimiter.csproj.AssemblyReference.cache
+C:\Users\tarl1\source\repos\StardewValleyMods\DayLimiter\obj\Debug\net6.0\DayLimiter.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\tarl1\source\repos\StardewValleyMods\DayLimiter\obj\Debug\net6.0\DayLimiter.AssemblyInfoInputs.cache
+C:\Users\tarl1\source\repos\StardewValleyMods\DayLimiter\obj\Debug\net6.0\DayLimiter.AssemblyInfo.cs
+C:\Users\tarl1\source\repos\StardewValleyMods\DayLimiter\obj\Debug\net6.0\DayLimiter.csproj.CoreCompileInputs.cache
+C:\Users\tarl1\source\repos\StardewValleyMods\DayLimiter\obj\Debug\net6.0\DayLimiter.dll
