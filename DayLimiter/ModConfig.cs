@@ -9,5 +9,6 @@ namespace DayLimiter
         public bool ModEnabled { get; set; } = false;
         public bool ExitToTitle { get; set; } = false;
         public int DayLimitCount { get; set; } = 3;
+        public DateTime? TakeBreakUntilTime { get; set; } = null;
     }
 }
